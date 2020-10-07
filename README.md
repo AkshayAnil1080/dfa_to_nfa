@@ -4,3 +4,7 @@ First line of the input contains the number of states (N) of NFA. Second line of
 Output contains the NFA, ∈ closure for every states of the corresponding NFA and DFA obtained by converting the input NFA. States and input symbols of the DFA are also specified.
 
 see the code for implementation of above approach :
+
+![](images/example.PNG)
+![](images/dfa_transiition%20table.PNG)
+![](images/nfa_transition%20table.PNG)
