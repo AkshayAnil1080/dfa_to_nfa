@@ -1,0 +1,188 @@
+Program to Implement NFA with epsilon move to DFA Conversion
+Last Updated: 20-02-2018
+Non-determinestic Finite Automata (NFA) : NFA is a finite automaton where for some cases when a single input is given to a single state, the machine goes to more than 1 states, i.e. some of the moves cannot be uniquely determined by the present state and the present input symbol.
+
+An NFA can be represented as M = { Q, ∑, ∂, q0, F}
+Q → Finite non-empty set of states.
+∑ → Finite non-empty set of input symbols.
+∂ → Transitional Function.
+q0 → Beginning state.
+F → Final State
+
+NFA with (null) or ∈ move : If any finite automata contains ε (null) move or transaction, then that finite automata is called NFA with ∈ moves
+
+Example :
+Consider the following figure of NFA with ∈ move :
+
+
+Transition state table for the above NFA
+
+
+
+
+STATES	0	1	EPSILON
+A	B, C	A	B
+B	–	B	C
+C	C	C	–
+Epsilon (∈) – closure : Epsilon closure for a given state X is a set of states which can be reached from the states X with only (null) or ε moves including the state X itself. In other words, ε-closure for a state can be obtained by union operation of the ε-closure of the states which can be reached from X with a single ε move in recursive manner.
+
+For the above example ∈ closure are as follows :
+
+∈ closure(A) : {A, B, C}
+∈ closure(B) : {B, C}
+∈ closure(C) : {C}
+ 
+Deterministic Finite Automata (DFA) : DFA is a finite automata where, for all cases, when a single input is given to a single state, the machine goes to a single state, i.e., all the moves of the machine can be uniquely determined by the present state and the present input symbol.
+
+Steps to Convert NFA with ε-move to DFA :
+Step 1 : Take ∈ closure for the beginning state of NFA as beginning state of DFA.
+Step 2 : Find the states that can be traversed from the present for each input symbol
+(union of transition value and their closures for each states of NFA present in current state of DFA).
+
+Step 3 : If any new state is found take it as current state and repeat step 2.
+Step 4 : Do repeat Step 2 and Step 3 until no new state present in DFA transition table.
+Step 5 : Mark the states of DFA which contains final state of NFA as final states of DFA.
+
+Transition State Table for DFA corresponding to above NFA
+
+STATES	0	1
+A, B, C	B, C	A, B, C
+B, C	C	B, C
+C	C	C
+DFA STATE DIAGRAM
+
+
+
+
+
+Examples :
+
+Input : 6
+        2
+        FC - BF
+        - C -
+        - - D
+        E A -
+        A - BF
+        - - -
+
+
+Output :
+ STATES OF NFA :        A, B, C, D, E, F,
+
+ GIVEN SYMBOLS FOR NFA:     0, 1, eps
+
+
+ NFA STATE TRANSITION TABLE 
+
+
+STATES    |0    |1    eps
+--------+------------------------------------
+A    |FC     |-     |BF     
+B    |-     |C     |-     
+C    |-     |-     |D     
+D    |E     |A     |-     
+E    |A     |-     |BF     
+F    |-     |-     |-     
+
+ e-Closure (A) :    ABF
+
+ e-Closure (B) :    B
+
+ e-Closure (C) :    CD
+
+ e-Closure (D) :    D
+
+ e-Closure (E) :    BEF
+
+ e-Closure (F) :    F
+
+
+********************************************************
+
+         DFA TRANSITION STATE TABLE          
+
+
+ STATES OF DFA :        ABF, CDF, CD, BEF,
+
+ GIVEN SYMBOLS FOR DFA:     0, 1,
+
+STATES    |0    |1    
+--------+-----------------------
+ABF    |CDF     |CD     
+CDF    |BEF     |ABF     
+CD    |BEF     |ABF     
+BEF    |ABF     |CD     
+
+
+
+Input :
+9
+2
+- - BH
+- - CE
+D - -
+- - G
+- F -
+- - G
+- - BH
+I - -
+- -  -
+
+
+Output :
+
+STATES OF NFA :        A, B, C, D, E, F, G, H, I,
+
+ GIVEN SYMBOLS FOR NFA:     0, 1, eps
+
+
+ NFA STATE TRANSITION TABLE 
+
+
+STATES    |0    |1    eps
+--------+------------------------------------
+A    |-     |-     |BH     
+B    |-     |-     |CE     
+C    |D     |-     |-     
+D    |-     |-     |G     
+E    |-     |F     |-     
+F    |-     |-     |G     
+G    |-     |-     |BH     
+H    |I     |-     |-     
+I    |-     |-     |-     
+
+ e-Closure (A) :    ABCEH
+
+ e-Closure (B) :    BCE
+
+ e-Closure (C) :    C
+
+ e-Closure (D) :    BCDEGH
+
+ e-Closure (E) :    E
+
+ e-Closure (F) :    BCEFGH
+
+ e-Closure (G) :    BCEGH
+
+ e-Closure (H) :    H
+
+ e-Closure (I) :    I
+
+
+********************************************************
+
+         DFA TRANSITION STATE TABLE          
+
+
+ STATES OF DFA :        ABCEH, BCDEGHI, BCEFGH,
+
+ GIVEN SYMBOLS FOR DFA:     0, 1,
+
+STATES    |0    |1    
+--------+-----------------------
+ABCEH    |BCDEGHI     |BCEFGH     
+BCDEGHI    |BCDEGHI     |BCEFGH     
+BCEFGH    |BCDEGHI     |BCEFGH     
+
